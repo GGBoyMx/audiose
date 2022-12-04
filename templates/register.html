@@ -1,0 +1,138 @@
+{% extends'layout.html' %}
+{% block titulo %}Registrarme{% endblock %}
+{% block contenido %}
+<!-- comienzo de la nav y header -->
+<div class="despegar">
+  <header id="tieso">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">AudioSE</a>
+        <a class="nav-link" href="/"><i class="fa-solid fa-headphones-simple"></i></a>
+        &nbsp;&nbsp;&nbsp;
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse bg-primary" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>&nbsp;&nbsp;&nbsp;
+            <li class="nav-item">
+              <a class="nav-link active" href="#nu">Nuestros productos</a>
+            </li>&nbsp;&nbsp;&nbsp;
+            <li class="nav-item">
+              <a class="nav-link active" href="#contactanosss">Contáctanos</a>
+            </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="nav-link active">
+            <button class="boton dos"><span><a class="nav-link active" href="/micarrito">Mi carrito &nbsp;<i
+              class="fa-solid fa-cart-shopping"></i></a></span></button>
+            &nbsp;&nbsp;&nbsp;
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#login" class="botonw cuatro"><span><a class="nav-link active" data-bs-target="#login">Iniciar Sesión &nbsp;<i
+                      class="fa-solid fa-circle-user"></i></a></span></button>
+            &nbsp;&nbsp;&nbsp;
+            <button class="boton tres"><span><a class="nav-link active" href="/register">Registrarse &nbsp;<i
+                    class="fa-solid fa-arrow-right-to-bracket"></i></a></span></button>
+            &nbsp;&nbsp;&nbsp;
+            <div id="borderr">
+              <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" id="darkSwitch" />
+                <label class="custom-control-label" for="darkSwitch"><i class="fa-solid fa-cloud-moon"></i></label>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      </ul>
+    </nav>
+  </header>
+</div>
+<!-- fin de la nav y header -->
+<div>
+  <body class="form-v10">
+    <div class="page-content">
+      <div class="form-v10-content">
+        <form class="form-detail" action="/register" method="POST" id="myform">
+          <div class="form-left">
+            <h2>Información General</h2>
+            <div class="form-group">
+              <div class="form-row form-row-1">
+                <input type="text" name="nombre" id="nombre" class="input-text" placeholder="Nombres" required>
+              </div>
+              <div class="form-row form-row-2">
+                <input type="text" name="apellidos" id="apellidos" class="input-text" placeholder="Apellidos" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row form-row-3">
+                <input type="email" name="correo" id="correo" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="Correo">
+              </div>
+              <div class="form-row form-row-4">
+                  <input type="password" name="password" class="company" id="password" placeholder="Contraseña" required>
+                  <button class="azulito" id="toggle">Ver  Contraseña&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-regular fa-eye"></i></button></input>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row form-row-3">
+                <input type="number" name="telefono" class="company" id="telefono" placeholder="Telefono" required>
+              </div>
+              <div class="form-row form-row-4">
+                <input type="number" name="edad" class="company" id="edad" placeholder="Edad" required>
+              </div>
+            </div>    
+            <div class="form-group">
+              <div class="form-row form-row-92">
+                <input type="date" name="fechanac" id="fechanac" class="fechanac" placeholder="Fecha de nacimiento" required>
+              </div>
+            </div>  
+          </div>
+
+          <div class="form-right">
+            <h2>Mi dirección</h2>
+            <div class="form-group">
+              <div class="form-row form-row-2">
+                <input type="text" name="pais" id="pais" class="input-text" placeholder="Pais" required>
+              </div>
+              <div class="form-row form-row-2">
+                <input type="text" name="estado" id="estado" class="input-text" placeholder="Estado" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-row form-row-2">
+                <input type="text" name="municipio" class="municipio" id="municipio" placeholder="Municipio" required>
+              </div>
+              <div class="form-row form-row-2">
+                <input type="int" name="cp" class="cp" id="cp" placeholder="CP" required>
+              </div>
+              <div class="form-row form-row-2">
+                <input type="text" name="colonia" class="colonia" id="colonia" placeholder="Colonia" required>
+              </div>
+            </div>
+            <div class="form-row-9">
+              <input type="text" name="calle" class="calle" id="calle" placeholder="Calle + Número" required>
+            </div>
+            <div class="form-row-last">
+              <input type="submit" name="register" class="register" value="Registrarme">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      const passwordEle = document.getElementById('password');
+      const toggleEle = document.getElementById('toggle');
+
+      toggleEle.addEventListener('click', function () {
+        const type = passwordEle.getAttribute('type');
+
+        passwordEle.setAttribute(
+            'type',
+
+            type === 'password' ? 'text' : 'password'
+        );
+    });
+    </script>
+  </body>
+</div>
+{% endblock %}

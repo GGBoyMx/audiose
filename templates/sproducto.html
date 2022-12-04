@@ -1,0 +1,200 @@
+{% extends'layout.html' %}
+{% block titulo %}AudioSE{% endblock %}
+{% block contenido %}
+    <!-- comienzo de la nav y header -->
+    <div class="despegar">
+      <header id="tieso">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+                  <div class="container-fluid">
+                    <a class="navbar-brand" href="/">AudioSE</a>
+                    <a class="nav-link" href="/"><i class="fa-solid fa-headphones-simple"></i></a>
+                  &nbsp;&nbsp;&nbsp;
+                  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                      </li>&nbsp;&nbsp;&nbsp;
+                      <li class="nav-item">
+                      <li class="nav-item">
+                        <a class="nav-link active" href="#contactanosss">Contáctanos</a>
+                      </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      </ul>
+                  <!-- <button class="boton dos"><span><a class="nav-link"  href="/micarrito">Mi carrito &nbsp;<i class="fa-solid fa-cart-shopping"></i></a></span></button>
+                  &nbsp;&nbsp;&nbsp; -->
+                   <button class="botonw cuatro"><span><a class="nav-link"  href="/sUsuario">{{current_user.nombre}}&nbsp;<i class="fa-solid fa-circle-user"></i></a></span></button>
+                  &nbsp;&nbsp;&nbsp;
+                  <div class="botona">
+                    <a href="/logout">
+                      <button class="botona cinco">
+                          <div class="icono">
+                            <i class="fa-solid fa-circle-chevron-left"></i>
+                          </div>
+                            <span class="blanco">Cerrar Sesión</span>
+                      </button>
+                    </a>
+                  </div>
+                  &nbsp;&nbsp;&nbsp;
+                    <div id="borderr">
+                      <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" id="darkSwitch" />
+                        <label class="custom-control-label" for="darkSwitch"><i class="fa-solid fa-cloud-moon"></i></label>
+                      </div>
+                    </div>
+                </div>             
+              </nav>            
+    </header>
+    </div>
+  <!-- fin de la nav y header -->
+    <section class="container">
+      <h1>Lista de productos</h1>
+      <hr class="featurette-divider">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+        {% for message in messages %}
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+          <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" />
+          </svg>
+          <div>
+            {{ message }}
+          </div>
+        </div>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+        <table class="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Metodo de Envío</th>
+                <th scope="col">imagen</th>
+                <th><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#agregar">
+                  Agregar
+                </button></th>
+                <th>&nbsp;</th>
+              </tr>
+              <!-- Modal agregar -->
+              <div class="modal fade" id="agregar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar producto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/iProducto" method="POST" class="form-control">
+                      <div class="modal-body">                       
+                        <div class="form-left">
+                          <h2>Información del producto</h2>
+                          <div class="form-group">
+                            <div class="form-row form-row-1">
+                              <input type="text" name="descripcion" id="descripcion" class="input-text" placeholder="Descripción" required>
+                            </div>
+                            <div class="form-row form-row-2">
+                              <input type="number" name="precio" id="precio" class="input-text" placeholder="Precio" required>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="form-row form-row-3">
+                              <input type="text" name="metodoenvio" class="company" id="metodoenvio" placeholder="Método E." required>
+                            </div>
+                            <div class="form-row form-row-4">                     
+                              <input type="file" name="imagen" class="company" id="imagen" placeholder="Imagen" required>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+              <tr>
+                <th scope="row">{{p.0}}</th>
+                <td>{{p.2}}</td>
+                <td>{{p.1}}</td>
+                <td>{{p.3}}</td>
+                <td><img src="/static/img/{{p.4}}" height="50" alt=""></td>
+                <td>
+                  <button type="button" id="poqueto" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editar{{p.0}}">
+                    Editar<i class="fa-regular fa-pen-to-square"></i>
+                  </button>
+                </td>
+                <td>
+                  <button type="button" id="poqueto" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminar{{p.0}}">
+                    Borrar<i class="fa-solid fa-delete-left"></i>
+                  </button>
+                </td>
+              </tr>
+              <!-- Modal eliminar -->
+              <div class="modal fade" id="eliminar{{p.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar producto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                      <div class="modal-body">
+                        <form action="/dProducto/{{p.0}}" method="GET" class="form-control">      
+                        <p>Deseas eliminar prodcuto</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal editar -->
+              <div class="modal fade" id="editar{{p.0}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Editar producto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="form-detail" action="/uProducto/{{p.0}}" method="POST" id="myform">
+                        <div class="form-left">
+                          <h2>Información del producto</h2>
+                          <div class="form-group">
+                            <div class="form-row form-row-1">
+                              <input type="text" name="descripcion" value="{{p.2}}" id="descripcion" class="input-text" placeholder="Descripción" required>
+                            </div>
+                            <div class="form-row form-row-2">
+                              <input type="number" name="precio" value="{{p.1}}" id="precio" class="input-text" placeholder="Precio" required>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="form-row form-row-3">
+                              <input type="text" name="metodoenvio" value="{{p.3}}" class="company" id="metodoenvio" placeholder="Metodo de envío" required>
+                            </div>
+                            <div class="form-row form-row-4">
+                              <input type="file" name="imagen" value="{{p.4}}" class="company" id="imagen" placeholder="Imagen" required>
+                            </div>
+                          </div>    
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div> 
+                      </form>
+                    </div> 
+                  </div>
+                </div>
+              </div>
+                {% endfor %}            
+            </tbody>
+        </table>
+    </section>
+{% endblock %} 
